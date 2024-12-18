@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Editor SVG</h1>
+    <!-- Bara de unelte -->
+    <div class="toolbar">
+        <!-- Butoane pentru forme -->
+        <button id="add-rectangle">Dreptunghi</button>
+        <button id="add-ellipse">Elipsă</button>
+        <button id="add-line">Linie</button>
+        <button id="cursor-mode">Cursor</button>
+        <button id="add-path">Path</button>
+        <!-- Setări pentru linie -->
+        <label for="line-color">Culoare Linie:</label>
+        <input type="color" id="line-color" value="#000000">
+
+        <label for="line-width">Grosime Linie:</label>
+        <input type="number" id="line-width" min="1" value="1">
+
+        <!-- Butoane Export -->
+        <button id="export-png">Export PNG</button>
+        <button id="export-svg">Export SVG</button>
+
+        <label for="background-color">Culoare Fundal:</label>
+        <input type="color" id="background-color" value="#FFFFFF">
+    </div>
+
+    <!-- Canvas SVG -->
+    <svg id="editor"></svg>
+
+    <!-- Canvas Ascuns pentru Export -->
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

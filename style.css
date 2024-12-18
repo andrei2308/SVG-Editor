@@ -1,0 +1,75 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f4f4f4;
+    padding: 10px;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.toolbar button,
+.toolbar input {
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.toolbar button:hover {
+    background-color: #ddd;
+}
+
+#editor {
+    display: block;
+    width: 100%;
+    height: calc(100% - 120px);
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.selectat {
+    stroke: red !important;
+    stroke-dasharray: 5, 5;
+    /* Linie întreruptă pentru a evidenția selecția */
+}
+
+.selectat {
+    cursor: move;
+    stroke: red !important;
+    stroke-dasharray: 5, 5;
+}
+
+.selectat {
+    cursor: move;
+    stroke: red !important;
+    stroke-dasharray: 5, 5;
+    /* Evidențiază selecția */
+}
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid #3e8e41;
+}
+
+circle {
+    stroke: black;
+    stroke-width: 1px;
+}
