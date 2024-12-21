@@ -472,4 +472,89 @@ function clearEditPoints() {
     editPoints = [];
 }
 
+document.getElementById("export-raster").addEventListener("click", () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Obține dimensiunile SVG-ului
+    const svgRect = svgEditor.getBoundingClientRect();
+    canvas.width = svgRect.width;
+    canvas.height = svgRect.height;
+
+    const svgString = new XMLSerializer().serializeToString(svgEditor);
+    const img = new Image();
+
+    img.onload = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Curățăm canvasul
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Desenăm SVG-ul pe canvas
+
+        // Creăm un link pentru descărcare
+        const a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = "editor.png";
+        a.click();
+    };
+
+    // Convertim SVG-ul într-un URL imagine
+    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgString)));
+});
+
+
+document.getElementById("export-svg").addEventListener("click", () => {
+    // Clonăm SVG-ul pentru a adăuga atributele de dimensiune
+    const svgClone = svgEditor.cloneNode(true);
+
+    // Obținem dimensiunile SVG-ului
+    const svgRect = svgEditor.getBoundingClientRect();
+    svgClone.setAttribute("width", svgRect.width);
+    svgClone.setAttribute("height", svgRect.height);
+    svgClone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); // Adăugăm namespace-ul dacă lipsește
+
+    // Serializăm SVG-ul
+    const svgString = new XMLSerializer().serializeToString(svgClone);
+    const blob = new Blob([svgString], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    // Creăm un link pentru descărcare
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "editor.svg";
+    a.click();
+    URL.revokeObjectURL(url); // Curățăm URL-ul generat
+});
+
+//Salvarea automata a desenului si reincarcarea acestuia la pornire cu ajutorul web storage api 
+// Funcție pentru salvarea desenului în localStorage
+function saveToLocalStorage() {
+    const svgString = new XMLSerializer().serializeToString(svgEditor);
+    localStorage.setItem("savedSVG", svgString);
+    console.log("Desen salvat în localStorage");
+}
+
+// Funcție pentru încărcarea desenului din localStorage
+function loadFromLocalStorage() {
+    const savedSVG = localStorage.getItem("savedSVG");
+    if (savedSVG) {
+        svgEditor.innerHTML = savedSVG;
+
+        // Adăugăm namespace-ul dacă lipsește
+        if (!svgEditor.hasAttribute("xmlns")) {
+            svgEditor.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        }
+
+        console.log("Desen încărcat din localStorage");
+    } else {
+        console.log("Nu există un desen salvat.");
+    }
+}
+
+// Salvarea automată înainte de închiderea paginii
+window.addEventListener("beforeunload", () => {
+    saveToLocalStorage();
+});
+
+// Reîncărcarea automată a desenului la pornire
+document.addEventListener("DOMContentLoaded", () => {
+    loadFromLocalStorage();
+});
 
