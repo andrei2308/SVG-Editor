@@ -575,3 +575,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadFromLocalStorage();
 });
 
+document.getElementById("clear").addEventListener("click", () => {
+    svgEditor.innerHTML = "";
+    pushToUndoStack();
+});
